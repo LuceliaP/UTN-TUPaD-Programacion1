@@ -1,4 +1,4 @@
-'''# 1) Crea un programa que imprima en pantalla todos los números enteros desde 0 hasta 100
+# 1) Crea un programa que imprima en pantalla todos los números enteros desde 0 hasta 100
 # (incluyendo ambos extremos), en orden creciente, mostrando un número por línea.
 
 for x in range (0, 101,1):
@@ -121,11 +121,11 @@ for i in range (0,100):
 
 print("La media de los valores ingresados es ", contador_num / 100)
 
-'''
+
 # 10) Escribe un programa que invierta el orden de los dígitos de un número ingresado por el
 # usuario.
 
-numero = input("Ingrese el numero a invertir")
+numero = input("Ingrese el numero a invertir ")
 num_invertido = ""
 
 for i in range (len(numero) -1, -1, -1):
