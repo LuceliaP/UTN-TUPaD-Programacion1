@@ -1,0 +1,3 @@
+lapicera,120.5,30
+cartuchera,524,10
+mochila,110000,5

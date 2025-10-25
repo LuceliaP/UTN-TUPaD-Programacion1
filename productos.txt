@@ -1,0 +1,1 @@
+lapicera,120.5,30goma,90,10lápiz,95,20lapicera,120.5,30goma,90,10lápiz,95,20{nuevo_nombre},{nuevo_precio},{nuevo_cantidad}{nuevo_nombre},{nuevo_precio},{nuevo_cantidad}
