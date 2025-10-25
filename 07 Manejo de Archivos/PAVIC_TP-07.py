@@ -1,3 +1,4 @@
+
 """
 
 1. Crear archivo inicial con productos: Crear un archivo de texto llamado
@@ -37,33 +38,19 @@ with open("productos.txt", "r") as archivo:
 
 #formateo de la lectura del archivo
 
-with open("productos.txt", "r") as archivo:
-  lineas = archivo.readlines()
-  for linea in lineas:
-    partes = linea.strip().split(",")
-    nombre = partes[0]
-    precio = partes[1]
-    cantidad = partes[2]
-    print(f"Producto: {nombre.capitalize()} | Precio: ${precio} | Cantidad: {cantidad}")
+def mostrar_productos():
+    with open("productos.txt", "r") as archivo:
+        for linea in archivo:
+            nombre, precio, cantidad = linea.strip().split(",")
+            print(f"Producto: {nombre.capitalize()} | Precio: ${precio} | Cantidad: {cantidad}")
 
 """3. Agregar productos desde teclado: Modificar el programa para que luego de mostrar
 los productos, le pida al usuario que ingrese un nuevo producto (nombre, precio,
 cantidad) y lo agregue al archivo sin borrar el contenido existente.
 """
+mostrar_productos()
 
-#Printeo la lista
-with open("productos.txt", "r") as archivo:
-  lineas = archivo.readlines()
-  for linea in lineas:
-    partes = linea.strip().split(",")
-    nombre = partes[0]
-    precio = partes[1]
-    cantidad = partes[2]
-    print(f"Producto: {nombre.title()} | Precio: ${precio} | Cantidad: {cantidad}")
-
-#Se le pide al usuario ingresar un nuevo producto
-with open("productos.txt", "a") as archivo:
-
+def agregar_producto():
     opcion = input("Desea ingresar un nuevo producto? Escriba S por sí y N por no: ")
     if opcion == "S" or opcion == "s":
 
@@ -72,8 +59,8 @@ with open("productos.txt", "a") as archivo:
         nuevo_precio = input("Ingrese el precio: ")
 
         while not nuevo_precio.isdigit():
-            print("Por favor ingrese solamente numeros")
-            nuevo_precio = input("Ingrese el precio: ")
+                print("Por favor ingrese solamente numeros")
+                nuevo_precio = input("Ingrese el precio: ")
 
         nuevo_precio = int(nuevo_precio)
 
@@ -81,25 +68,18 @@ with open("productos.txt", "a") as archivo:
 
         while not nuevo_cantidad.isdigit():
             print("Por favor ingrese solamente numeros")
-            nuevo_precio = input("Ingrese el precio: ")
+            nuevo_cantidad= input("Ingrese la cantidad: ")
 
         nuevo_cantidad = int(nuevo_cantidad)
-        nuevo_producto = f"{nuevo_nombre},{nuevo_precio},{nuevo_cantidad}\n"
-        archivo.write(nuevo_producto)
 
-
+        with open("productos.txt", "a") as archivo:
+            archivo.write(f"{nuevo_nombre},{nuevo_precio},{nuevo_cantidad}\n")
+        print("Producto agregado con éxito")
     else:
         print("Gracias por visitar el catálogo")
 
 #Se vuelve a mostrar la lista de productos actualizados
-with open("productos.txt", "r") as archivo:
-  lineas = archivo.readlines()
-  for linea in lineas:
-    partes = linea.strip().split(",")
-    nombre = partes[0]
-    precio = partes[1]
-    cantidad = partes[2]
-    print(f"Segundo print. Producto: {nombre.title()} | Precio: ${precio} | Cantidad: {cantidad}")
+mostrar_productos()
 
 """4. Cargar productos en una lista de diccionarios: Al leer el archivo, cargar los datos en
 una lista llamada productos, donde cada elemento sea un diccionario con claves:
@@ -115,56 +95,35 @@ lista = [
 with open("mi_archivo.txt", "w") as archivo:
   archivo.writelines(lista)
 
-with open("mi_archivo.txt", "r") as archivo:
-  lineas = archivo.readlines()
+def cargar_lista_de_diccionarios():
   productos = []
-  for linea in lineas:
-    partes = linea.strip().split(",")
-    producto = {}
-    producto["Nombre"] = partes[0].capitalize()
-    producto["Precio"] = partes[1]
-    producto["Cantidad"] = partes[2]
-    productos.append(producto)
-  print(f"La lista es: {productos}")
+  with open("mi_archivo.txt", "r") as archivo:
+    for linea in archivo:
+      nombre, precio, cantidad = linea.strip().split(",")
+      producto = {
+         "Nombre": nombre.capitalize(),
+         "Precio": float(precio),
+         "Cantidad": int(cantidad)
+      }
+      productos.append(producto)
+  return productos
+
 
 """5. Buscar producto por nombre: Pedir al usuario que ingrese el nombre de un
 producto. Recorrer la lista de productos y, si lo encuentra, mostrar todos sus datos. Si
 no existe, mostrar un mensaje de error.
 """
 
-#crear una lista
-mis_productos = [
-    "zapallo,1000,10\n",
-    "papa,600,6\n",
-    "batata,990,5\n"
-]
-
-#cargar la lista a un archivo
-with open("verduleria.txt", "w") as archivo:
-  archivo.writelines(mis_productos)
-
-#mostrar los productos
-with open("verduleria.txt", "r") as archivo:
-  lineas = archivo.readlines()
-  for linea in lineas:
-    partes = linea.strip().split(",")
-    print(partes)
-
-#pedir al usuario que ingrese un producto para buscar
-prod_buscado = input("Ingrese un producto para buscar: ").capitalize()
-bandera = False
-
-#recorrer la lista
-with open("verduleria.txt", "r") as archivo:
-  lineas = archivo.readlines()
-  for linea in lineas:
-    partes = linea.strip().split(",")
-    if partes[0].capitalize() == prod_buscado :
-      print(f"Producto: {partes[0].capitalize()}, Precio: {partes[1]}, Cantidad: {partes[2]}")
-      bandera = True
-      break
-if not bandera:
-  print("Producto no encontrado")
+def buscar_producto(productos):
+    prod_buscado = input("Ingrese un producto para buscar: ").capitalize()
+    bandera = False
+    for producto in productos:
+       if producto["Nombre"].lower() == prod_buscado.lower():
+            print(f"Producto encontrado: {producto['Nombre']} | Precio: ${producto['Precio']} | Cantidad: {producto['Cantidad']}")
+            bandera = True
+            break
+    if not bandera:
+        print("Producto no encontrado.")
 
 """6. Guardar los productos actualizados: Después de haber leído, buscado o agregado
 productos, sobrescribir el archivo productos.txt escribiendo nuevamente todos los
@@ -178,9 +137,11 @@ actualizacion = [
     "mochila,130000,4\n"
 ]
 
-with open("productos.txt", "w") as archivo:
-  archivo.writelines(actualizacion)
+def guardar_productos_actualizados(productos_gpa):
+   with open("productos.txt", "w") as archivo:
+        archivo.writelines(actualizacion)
+        print("Archivo actualizado correctamente.")
 
-with open("productos.txt", "r") as archivo:
-  for producto in archivo:
-    print(producto.strip().split(","))
+guardar_productos_actualizados(actualizacion)
+#chequeo el guardado
+mostrar_productos()

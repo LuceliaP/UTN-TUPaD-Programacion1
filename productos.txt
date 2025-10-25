@@ -1,1 +1,3 @@
-lapicera,120.5,30goma,90,10lápiz,95,20lapicera,120.5,30goma,90,10lápiz,95,20{nuevo_nombre},{nuevo_precio},{nuevo_cantidad}{nuevo_nombre},{nuevo_precio},{nuevo_cantidad}
+lapicera,13000,15
+cartuchera,55000,10
+mochila,130000,4
